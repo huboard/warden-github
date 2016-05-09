@@ -45,7 +45,7 @@ module Warden
         request.body = access_token_uri.query
 
         response = http.request(request)
-        decode_params(response.body).fetch('access_token')
+        decode_params(response.body)
       rescue IndexError
         fail BadVerificationCode, 'Bad verification code'
       end
