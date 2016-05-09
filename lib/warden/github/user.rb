@@ -1,9 +1,9 @@
 module Warden
   module GitHub
-    class User < Struct.new(:attribs, :token, :browser_session_id, :memberships)
+    class User < Struct.new(:attribs, :token, :scope, :browser_session_id, :memberships)
       ATTRIBUTES = %w[id login name gravatar_id avatar_url email company site_admin].freeze
 
-      def self.load(access_token, browser_session_id = nil)
+      def self.load(access_token, scope, browser_session_id = nil)
         api  = Octokit::Client.new(:access_token => access_token)
         data =  { }
 
@@ -11,7 +11,7 @@ module Warden
           data[k.to_s] = v if ATTRIBUTES.include?(k.to_s)
         end
 
-        new(data, access_token, browser_session_id)
+        new(data, access_token, scope, browser_session_id)
       end
 
       def marshal_dump
