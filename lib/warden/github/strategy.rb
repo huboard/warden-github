@@ -81,8 +81,8 @@ module Warden
       end
 
       def load_user
-        access_token = oauth.access_token
-        User.load(access_token['access_token'], access_token['scope'], custom_session['browser_session_id'])
+        token_response = oauth.token_response
+        User.load(token_response['access_token'], token_response['scope'], custom_session['browser_session_id'])
       rescue OAuth::BadVerificationCode => e
         abort_flow!(e.message)
       end

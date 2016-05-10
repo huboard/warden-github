@@ -32,12 +32,16 @@ module Warden
       end
 
       def access_token
-        @access_token ||= load_access_token
+        token_response['access_token']
+      end
+
+      def token_response
+        @token_response ||= load_token_response
       end
 
       private
 
-      def load_access_token
+      def load_token_response
         http = Net::HTTP.new(access_token_uri.host, access_token_uri.port)
         http.use_ssl = access_token_uri.scheme == 'https'
 
