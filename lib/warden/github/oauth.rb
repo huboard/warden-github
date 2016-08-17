@@ -47,6 +47,7 @@ module Warden
 
         request = Net::HTTP::Post.new(access_token_uri.path)
         request.body = access_token_uri.query
+        request.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
         response = http.request(request)
         decode_params(response.body)
