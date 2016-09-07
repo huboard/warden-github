@@ -44,10 +44,10 @@ module Warden
       def load_token_response
         http = Net::HTTP.new(access_token_uri.host, access_token_uri.port)
         http.use_ssl = access_token_uri.scheme == 'https'
+        http.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
         request = Net::HTTP::Post.new(access_token_uri.path)
         request.body = access_token_uri.query
-        request.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
         response = http.request(request)
         decode_params(response.body)
